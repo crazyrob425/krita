@@ -10,6 +10,7 @@
 #include <QPagedPaintDevice>
 #include <QDateTime>
 
+#include <klocalizedstring.h>
 #include <kis_debug.h>
 
 #include "kis_image.h"
@@ -31,7 +32,7 @@ KisPrintEngine::~KisPrintEngine()
 bool KisPrintEngine::print(KisImageSP image, KisPrintSettings *settings, QPrinter *printer)
 {
     if (!image || !settings || !printer) {
-        Q_EMIT printingError(tr("Invalid parameters for printing"));
+        Q_EMIT printingError(i18n("Invalid parameters for printing"));
         return false;
     }
 
@@ -40,7 +41,7 @@ bool KisPrintEngine::print(KisImageSP image, KisPrintSettings *settings, QPrinte
     try {
         QPainter painter;
         if (!painter.begin(printer)) {
-            Q_EMIT printingError(tr("Failed to start printer"));
+            Q_EMIT printingError(i18n("Failed to start printer"));
             return false;
         }
 

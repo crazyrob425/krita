@@ -10,6 +10,8 @@
 #include <QPaintEvent>
 #include <QRectF>
 
+#include <klocalizedstring.h>
+
 #include "kis_image.h"
 #include "printing/KisPrintSettings.h"
 
@@ -98,7 +100,7 @@ void KisPrintPreviewWidget::paintEvent(QPaintEvent *event)
     
     if (!m_image || !m_settings) {
         painter.setPen(Qt::white);
-        painter.drawText(rect(), Qt::AlignCenter, tr("No image loaded"));
+        painter.drawText(rect(), Qt::AlignCenter, i18n("No image loaded"));
         return;
     }
     
