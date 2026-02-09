@@ -112,6 +112,19 @@
       <statusTip></statusTip>
     </Action>
 
+    <Action name="file_print">
+      <icon>document-print</icon>
+      <text>&amp;Print...</text>
+      <whatsThis></whatsThis>
+      <toolTip>Print document</toolTip>
+      <iconText>Print</iconText>
+      <activationFlags>1</activationFlags>
+      <activationConditions>0</activationConditions>
+      <shortcut>Ctrl+P</shortcut>
+      <isCheckable>false</isCheckable>
+      <statusTip></statusTip>
+    </Action>
+
     <Action name="file_import_animation">
       <icon></icon>
       <text>Import animation frames...</text>

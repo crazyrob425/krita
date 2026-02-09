@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <author>
+    SPDX-FileCopyrightText: none
+    SPDX-License-Identifier: GPL-3.0-or-later
+  </author>
+ <class>WdgPrintOptions</class>
+ <widget class="QWidget" name="WdgPrintOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Print Options</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_main">
+   <item>
+    <widget class="QSplitter" name="splitter">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QWidget" name="previewContainer" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_preview">
+       <item>
+        <widget class="QLabel" name="lblPreview">
+         <property name="text">
+          <string>Preview</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KisPrintPreviewWidget" name="previewWidget" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>300</width>
+           <height>400</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_zoom">
+         <item>
+          <widget class="QPushButton" name="btnFitToWindow">
+           <property name="text">
+            <string>Fit</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnZoom100">
+           <property name="text">
+            <string>100%</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_zoom">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="optionsContainer" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_options">
+       <item>
+        <widget class="QTabWidget" name="tabWidget">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="tabBasic">
+          <attribute name="title">
+           <string>Basic</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_basic">
+           <item>
+            <widget class="QGroupBox" name="groupPrinter">
+             <property name="title">
+              <string>Printer Settings</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout_printer">
+              <item row="0" column="0">
+               <widget class="QLabel" name="lblPrinter">
+                <property name="text">
+                 <string>Printer:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="cmbPrinter"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="lblPageSize">
+                <property name="text">
+                 <string>Page Size:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="cmbPageSize"/>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="lblOrientation">
+                <property name="text">
+                 <string>Orientation:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QComboBox" name="cmbOrientation">
+                <item>
+                 <property name="text">
+                  <string>Portrait</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Landscape</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="lblCopies">
+                <property name="text">
+                 <string>Copies:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QSpinBox" name="spinCopies">
+                <property name="minimum">
+                 <number>1</number>
+                </property>
+                <property name="maximum">
+                 <number>999</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QCheckBox" name="chkCollate">
+                <property name="text">
+                 <string>Collate</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupLayout">
+             <property name="title">
+              <string>Layout &amp; Positioning</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout_layout">
+              <item row="0" column="0">
+               <widget class="QLabel" name="lblPosition">
+                <property name="text">
+                 <string>Position:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="cmbPosition">
+                <item>
+                 <property name="text">
+                  <string>Center</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Top-Left</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Custom</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="lblScaling">
+                <property name="text">
+                 <string>Scaling:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="cmbScaling">
+                <item>
+                 <property name="text">
+                  <string>Fit to Page</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Percentage</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Specific Dimensions</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="lblScalePercent">
+                <property name="text">
+                 <string>Scale %:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QDoubleSpinBox" name="spinScalePercent">
+                <property name="minimum">
+                 <double>1.000000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>1000.000000000000000</double>
+                </property>
+                <property name="value">
+                 <double>100.000000000000000</double>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QCheckBox" name="chkLockAspectRatio">
+                <property name="text">
+                 <string>Lock Aspect Ratio</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupMargins">
+             <property name="title">
+              <string>Margins (mm)</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout_margins">
+              <item row="0" column="0">
+               <widget class="QLabel" name="lblMarginTop">
+                <property name="text">
+                 <string>Top:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QDoubleSpinBox" name="spinMarginTop">
+                <property name="minimum">
+                 <double>0.000000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>100.000000000000000</double>
+                </property>
+                <property name="value">
+                 <double>10.000000000000000</double>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="lblMarginBottom">
+                <property name="text">
+                 <string>Bottom:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QDoubleSpinBox" name="spinMarginBottom">
+                <property name="minimum">
+                 <double>0.000000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>100.000000000000000</double>
+                </property>
+                <property name="value">
+                 <double>10.000000000000000</double>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="lblMarginLeft">
+                <property name="text">
+                 <string>Left:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QDoubleSpinBox" name="spinMarginLeft">
+                <property name="minimum">
+                 <double>0.000000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>100.000000000000000</double>
+                </property>
+                <property name="value">
+                 <double>10.000000000000000</double>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="lblMarginRight">
+                <property name="text">
+                 <string>Right:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QDoubleSpinBox" name="spinMarginRight">
+                <property name="minimum">
+                 <double>0.000000000000000</double>
+                </property>
+                <property name="maximum">
+                 <double>100.000000000000000</double>
+                </property>
+                <property name="value">
+                 <double>10.000000000000000</double>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_basic">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tabColorManagement">
+          <attribute name="title">
+           <string>Color Management</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_color">
+           <item>
+            <widget class="QGroupBox" name="groupColorManagement">
+             <property name="title">
+              <string>Color Settings</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout_color">
+              <item row="0" column="0">
+               <widget class="QLabel" name="lblSourceProfile">
+                <property name="text">
+                 <string>Source Profile:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="lblSourceProfileValue">
+                <property name="text">
+                 <string>Document Color Space</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="lblPrinterProfile">
+                <property name="text">
+                 <string>Printer Profile:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="cmbPrinterProfile"/>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="lblRenderingIntent">
+                <property name="text">
+                 <string>Rendering Intent:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QComboBox" name="cmbRenderingIntent">
+                <item>
+                 <property name="text">
+                  <string>Perceptual</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Relative Colorimetric</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Saturation</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Absolute Colorimetric</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QCheckBox" name="chkBlackPointCompensation">
+                <property name="text">
+                 <string>Black Point Compensation</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QCheckBox" name="chkProofColors">
+                <property name="text">
+                 <string>Proof Colors</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_color">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tabAdvanced">
+          <attribute name="title">
+           <string>Advanced</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_advanced">
+           <item>
+            <widget class="QGroupBox" name="groupPrintMarks">
+             <property name="title">
+              <string>Print Marks</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_marks">
+              <item>
+               <widget class="QCheckBox" name="chkCropMarks">
+                <property name="text">
+                 <string>Crop Marks</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chkRegistrationMarks">
+                <property name="text">
+                 <string>Registration Marks</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chkColorBars">
+                <property name="text">
+                 <string>Color Bars</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="chkPageInfo">
+                <property name="text">
+                 <string>Page Information</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupImageAdjustments">
+             <property name="title">
+              <string>Image Adjustments</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout_adjustments">
+              <item row="0" column="0">
+               <widget class="QLabel" name="lblBrightness">
+                <property name="text">
+                 <string>Brightness:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QSlider" name="sliderBrightness">
+                <property name="minimum">
+                 <number>-100</number>
+                </property>
+                <property name="maximum">
+                 <number>100</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="lblContrast">
+                <property name="text">
+                 <string>Contrast:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QSlider" name="sliderContrast">
+                <property name="minimum">
+                 <number>-100</number>
+                </property>
+                <property name="maximum">
+                 <number>100</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="lblSaturation">
+                <property name="text">
+                 <string>Saturation:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QSlider" name="sliderSaturation">
+                <property name="minimum">
+                 <number>-100</number>
+                </property>
+                <property name="maximum">
+                 <number>100</number>
+                </property>
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QCheckBox" name="chkPrintBackgroundColor">
+                <property name="text">
+                 <string>Print Background Color</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer_advanced">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KisPrintPreviewWidget</class>
+   <extends>QWidget</extends>
+   <header>widgets/KisPrintPreviewWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

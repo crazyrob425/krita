@@ -80,6 +80,7 @@ set(kritaui_LIB_SRCS
     dialogs/KisColorSpaceConversionDialog.cpp
     dialogs/KisProofingConfigModel.cpp
     dialogs/KisFrameRateLimitModel.cpp
+    dialogs/KisPrintDialog.cpp
 
     flake/kis_node_dummies_graph.cpp
     flake/kis_dummies_facade_base.cpp
@@ -310,8 +311,13 @@ set(kritaui_LIB_SRCS
     widgets/kis_round_hud_button.cpp
     widgets/KisDockerHud.cpp
     widgets/KisProofingOptionsWidget.cpp
+    widgets/KisPrintPreviewWidget.cpp
 
     widgets/KisGrabKeyboardFocusRecoveryWorkaround.cpp
+
+    # Printing
+    printing/KisPrintSettings.cpp
+    printing/KisPrintEngine.cpp
 
     # Gradient related widgets
     widgets/gradient/KisStopGradientEditor.cpp
@@ -613,6 +619,7 @@ ki18n_wrap_ui(kritaui_LIB_SRCS
     forms/wdgMissingColorProfile.ui
     forms/wdgPasteFormat.ui
     forms/wdgconvertcolorspace.ui
+    forms/wdgprintoptions.ui
 
 
     widgets/KisDlgListPicker.ui
@@ -689,6 +696,7 @@ target_link_libraries(kritaui
 
         Qt${QT_MAJOR_VERSION}::Network
         Qt${QT_MAJOR_VERSION}::Concurrent
+        Qt${QT_MAJOR_VERSION}::PrintSupport
 
         Eigen3::Eigen
         Boost::boost

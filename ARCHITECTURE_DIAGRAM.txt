@@ -1,0 +1,166 @@
+================================================================================
+PRINT DIALOG ARCHITECTURE DIAGRAM
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                          USER INTERACTION                                │
+│                    File → Print (Ctrl+P) clicked                         │
+└────────────────────────────────┬────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         KisMainWindow                                    │
+│  ┌──────────────────────────────────────────────────────────────┐       │
+│  │ slotPrintFile()                                              │       │
+│  │  - Creates KisPrintDialog                                    │       │
+│  │  - Passes current KisImageSP                                 │       │
+│  │  - Shows dialog                                              │       │
+│  └──────────────────────────────────────────────────────────────┘       │
+└────────────────────────────────┬────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        KisPrintDialog (KoDialog)                         │
+│  ┌──────────────────────────────────────────────────────────────┐       │
+│  │ Constructor:                                                 │       │
+│  │  - Creates WdgPrintOptions (UI)                              │       │
+│  │  - Creates KisPrintSettings (data model)                     │       │
+│  │  - Creates KisPrintEngine (backend)                          │       │
+│  │  - Loads saved settings                                      │       │
+│  │  - Sets up signal/slot connections                           │       │
+│  └──────────────────────────────────────────────────────────────┘       │
+│                                                                           │
+│  ┌──────────────────────────────────────────────────────────────┐       │
+│  │ Signal/Slot Connections:                                     │       │
+│  │  - UI changes → slotUpdatePreview()                          │       │
+│  │  - OK clicked → slotPrint()                                  │       │
+│  │  - Page Setup → slotPageSetup()                              │       │
+│  └──────────────────────────────────────────────────────────────┘       │
+└───────┬────────────────────────────┬────────────────────────────┬────────┘
+        │                            │                            │
+        ▼                            ▼                            ▼
+┌───────────────────┐    ┌──────────────────────┐    ┌──────────────────┐
+│ WdgPrintOptions   │    │  KisPrintSettings    │    │ KisPrintEngine   │
+│ (UI Widget)       │    │  (Data Model)        │    │ (Print Backend)  │
+│                   │    │                      │    │                  │
+│ ┌───────────────┐ │    │ Stores:              │    │ print()          │
+│ │ Tab 1: Basic  │ │    │ • Printer name       │    │ • Uses QPrinter  │
+│ │ • Printer     │ │    │ • Page size          │    │ • Renders page   │
+│ │ • Page size   │ │    │ • Orientation        │    │ • Color convert  │
+│ │ • Orientation │ │    │ • Copies/Collate     │    │ • Print marks    │
+│ │ • Position    │ │    │ • Position mode      │    │                  │
+│ │ • Scaling     │ │    │ • Scaling mode       │    │ renderPage()     │
+│ │ • Margins     │ │    │ • Margins            │    │ • Calc layout    │
+│ └───────────────┘ │    │ • Color profile      │    │ • Apply settings │
+│                   │    │ • Rendering intent   │    │ • Draw image     │
+│ ┌───────────────┐ │    │ • Print marks        │    │                  │
+│ │ Tab 2: Color  │ │    │ • Adjustments        │    │ drawPrintMarks() │
+│ │ • Source      │ │    │                      │    │ • Crop marks     │
+│ │ • Printer     │ │    │ loadSettings()       │    │ • Registration   │
+│ │ • Intent      │ │    │ saveSettings()       │    │ • Color bars     │
+│ │ • BPC         │ │    │ • Uses KConfig       │    │ • Page info      │
+│ │ • Proof       │ │    │                      │    │                  │
+│ └───────────────┘ │    └──────────────────────┘    └──────────────────┘
+│                   │
+│ ┌───────────────┐ │
+│ │ Tab 3: Adv.   │ │
+│ │ • Print marks │ │
+│ │ • Brightness  │ │
+│ │ • Contrast    │ │
+│ │ • Saturation  │ │
+│ └───────────────┘ │
+│                   │
+│ ┌───────────────┐ │
+│ │ Preview Panel │ │
+│ │ ┌───────────┐ │ │
+│ │ │ KisPrint  │ │ │
+│ │ │ Preview   │ │ │
+│ │ │ Widget    │ │ │
+│ │ └───────────┘ │ │
+│ │ • Fit btn     │ │
+│ │ • 100% btn    │ │
+│ └───────────────┘ │
+└───────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    KisPrintPreviewWidget                                 │
+│  ┌──────────────────────────────────────────────────────────────┐       │
+│  │ paintEvent()                                                 │       │
+│  │  - Draws page background (white)                             │       │
+│  │  - Draws page boundaries (black)                             │       │
+│  │  - Draws margins (dashed gray)                               │       │
+│  │  - Draws image preview (scaled)                              │       │
+│  │  - Draws image boundary (blue)                               │       │
+│  └──────────────────────────────────────────────────────────────┘       │
+│                                                                           │
+│  ┌──────────────────────────────────────────────────────────────┐       │
+│  │ updatePreview()                                              │       │
+│  │  - Triggered by KisPrintSettings::settingsChanged()          │       │
+│  │  - Renders low-res preview (for performance)                 │       │
+│  │  - Calculates image rect based on settings                   │       │
+│  │  - Calls update() to repaint                                 │       │
+│  └──────────────────────────────────────────────────────────────┘       │
+└─────────────────────────────────────────────────────────────────────────┘
+
+================================================================================
+DATA FLOW
+================================================================================
+
+USER CHANGES SETTING:
+  UI Widget changed → KisPrintDialog::slotXxxChanged()
+                   → KisPrintSettings updated
+                   → settingsChanged() signal
+                   → KisPrintPreviewWidget::updatePreview()
+                   → Widget repainted
+
+USER CLICKS PRINT:
+  OK button → KisPrintDialog::slotPrint()
+           → updateSettings() (UI → Settings)
+           → KisPrintEngine::print(image, settings, printer)
+           → renderPage() → drawPrintMarks()
+           → QPrinter outputs to printer/PDF
+           → settings->saveSettings() (KConfig)
+
+SETTINGS PERSISTENCE:
+  On dialog open:  KisPrintSettings::loadSettings() from KConfig
+  On print:        KisPrintSettings::saveSettings() to KConfig
+  Config group:    "PrintDialog" in kritarc
+
+================================================================================
+COLOR MANAGEMENT FLOW
+================================================================================
+
+  KisImage (source color space)
+      ↓
+  KoColorSpace::profile() → Source profile displayed
+      ↓
+  User selects printer profile + rendering intent
+      ↓
+  KisPrintEngine::convertColorSpace()
+      ↓
+  KoColorConversionTransformation applied
+      ↓
+  QImage with printer color space
+      ↓
+  QPainter draws to QPrinter
+
+================================================================================
+KEY INTEGRATION POINTS
+================================================================================
+
+1. Krita Action System:
+   kritamenu.action → KisActionManager → KisMainWindow
+   
+2. Color Management:
+   KisImage → KoColorSpace → KoColorProfile → LCMS2
+   
+3. UI Framework:
+   Qt Designer (.ui) → ki18n_wrap_ui → Wdg class → KoDialog
+   
+4. Settings:
+   KSharedConfig → KConfigGroup → KisPrintSettings
+   
+5. Printing:
+   Qt PrintSupport → QPrinter → Platform print system
+
+================================================================================

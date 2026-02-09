@@ -106,6 +106,7 @@
 #include "dialogs/kis_about_application.h"
 #include "dialogs/kis_delayed_save_dialog.h"
 #include "dialogs/kis_dlg_preferences.h"
+#include "dialogs/KisPrintDialog.h"
 #include "kis_action_manager.h"
 #include "KisApplication.h"
 #include "kis_canvas2.h"
@@ -242,6 +243,7 @@ public:
     KisAction *importFile {nullptr};
     KisAction *exportFile {nullptr};
     KisAction *exportFileAdvance {nullptr};
+    KisAction *printFile {nullptr};
     KisAction *undo {nullptr};
     KisAction *redo {nullptr};
     KisAction *close {nullptr};
@@ -1854,6 +1856,17 @@ void KisMainWindow::slotExportAdvance()
     }
 }
 
+void KisMainWindow::slotPrintFile()
+{
+    if (!d->activeView || !d->activeView->document() || !d->activeView->document()->image()) {
+        return;
+    }
+
+    KisPrintDialog *printDialog = new KisPrintDialog(d->activeView->document()->image(), this);
+    printDialog->showDialog();
+    delete printDialog;
+}
+
 void KisMainWindow::slotShowSessionManager() {
     KisPart::instance()->showSessionManager();
 }
@@ -3001,6 +3014,9 @@ void KisMainWindow::createActions()
 
     d->exportFileAdvance  = actionManager->createAction("file_export_advanced");
     connect(d->exportFileAdvance, SIGNAL(triggered(bool)), this, SLOT(slotExportAdvance()));
+
+    d->printFile  = actionManager->createAction("file_print");
+    connect(d->printFile, SIGNAL(triggered(bool)), this, SLOT(slotPrintFile()));
 
     /* The following entry opens the document information dialog.  Since the action is named so it
         intends to show data this entry should not have a trailing ellipses (...).  */
