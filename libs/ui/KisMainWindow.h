@@ -384,6 +384,11 @@ private Q_SLOTS:
     void slotExportAdvance();
 
     /**
+     * Show the print dialog to print the current document
+     */
+    void slotPrintFile();
+
+    /**
      * Hide the dockers
      */
     void toggleDockersVisibility(bool visible, bool onWelcomePage = false);
